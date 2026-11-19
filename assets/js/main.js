@@ -98,8 +98,18 @@
     };
     glideRAF = requestAnimationFrame(step);
   };
-  $$('a[href^="#"]').forEach(t => t.addEventListener('click', e => {
-    const id = t.getAttribute('href');
+  // links a una sección de esta misma página: "#seccion" o "index.html#seccion" estando en la home
+  const samePage = a => {
+    const h = a.getAttribute('href') || '';
+    if (h.startsWith('#')) return true;
+    if (!h.includes('#')) return false;
+    const u = new URL(a.href, location.href), norm = p => p.replace(/\/index(\.html)?$/, '/').replace(/\.html$/, '');
+    return u.origin === location.origin && norm(u.pathname) === norm(location.pathname);
+  };
+  // carga ya el peso 800 de Archivo (lo usa el hover de las pestañas): si no, el primer hover deja el texto en blanco mientras baja la fuente
+  try { document.fonts && document.fonts.load('800 15px Archivo'); } catch(e){}
+  $$('a[href*="#"]').filter(samePage).forEach(t => t.addEventListener('click', e => {
+    const id = '#' + t.getAttribute('href').split('#')[1];
     if (id.length < 2) return;
     const target = $(id);
     if (!target || id === '#contenido') return;
