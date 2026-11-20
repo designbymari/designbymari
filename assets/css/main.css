@@ -257,6 +257,9 @@ a.tab:hover span,a.tab:focus-visible span{font-weight:800}
 .footer__soc{position:absolute;left:calc(150 * var(--u));top:calc(205 * var(--u));display:flex;gap:calc(12 * var(--u))}
 .footer__soc .icon-link{width:36px;height:36px}
 .footer__logo{position:absolute;left:calc(500 * var(--u));bottom:0;width:calc(857 * var(--u))}
+/* logo nuevo del footer: archivo completo; se recorta abajo igual que el anterior (que venía cortado en el propio archivo) */
+.footer__logo{aspect-ratio:857 / 224;object-fit:cover;object-position:50% 0}
+@media (min-width:1024px){.footer__logo{left:calc(498.2 * var(--u))}}
 
 
 /* =========================================================
