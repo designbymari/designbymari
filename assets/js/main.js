@@ -439,7 +439,7 @@
 
   /* ---------- Caso: galerías que pasan solas (sin efecto) + puntitos ---------- */
   $$('[data-stack]').forEach(st => {
-    const imgs = $$('img', st);
+    const imgs = $$(':scope > img, :scope > video', st);
     if (imgs.length < 2) return;
     let i = 0, timer = null, active = false;
     const dots = document.createElement('div');
@@ -456,10 +456,21 @@
     st.before(wrap); wrap.append(st, dots);
     const show = k => {
       i = k;
-      imgs.forEach((im, n) => im.style.visibility = n === k ? 'visible' : 'hidden');
+      imgs.forEach((im, n) => {
+        im.style.visibility = n === k ? 'visible' : 'hidden';
+        if (im.tagName === 'VIDEO'){ if (n === k && active && !reduce){ im.currentTime = 0; im.play().catch(()=>{}); } else im.pause(); }
+      });
       btns.forEach((d, n) => d.setAttribute('aria-current', n === k ? 'true' : 'false'));
     };
-    const restart = () => { clearTimeout(timer); if (active && !reduce) timer = setTimeout(tick, 2200); };
+    // los videos no usan temporizador: pasan al siguiente cuando terminan
+    imgs.forEach(im => { if (im.tagName === 'VIDEO'){ im.muted = true; im.addEventListener('ended', () => { if (active && !reduce) tick(); }); } });
+    const isVid = () => imgs[i].tagName === 'VIDEO';
+    const restart = () => {
+      clearTimeout(timer);
+      if (!active || reduce){ if (isVid()) imgs[i].pause(); return; }
+      if (isVid()){ if (imgs[i].paused) imgs[i].play().catch(()=>{}); return; }
+      timer = setTimeout(tick, 2200);
+    };
     const tick = () => { show((i + 1) % imgs.length); restart(); };
     show(0);
     ScrollTrigger.create({trigger:st, start:'top 85%', end:'bottom 10%',

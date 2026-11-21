@@ -354,6 +354,8 @@ div.work .work__img::after{content:"";position:absolute;inset:0;background:rgba(
 .cs-desafio{padding:95px 0 0}
 .cs-desafio .cs-in{display:grid;grid-template-columns:408px 1fr;column-gap:152px}
 .cs-desafio__media video{width:408px;height:747px;object-fit:cover;display:block}
+.cs-stack--vid{width:408px;height:747px}
+.cs-stack--vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .cs-desafio__text{padding-top:8px;max-width:600px}
 .cs-desafio .cs-body{max-width:520px}
 .cs-desafio .cs-body{margin-top:40px}
@@ -417,6 +419,8 @@ div.work .work__img::after{content:"";position:absolute;inset:0;background:rgba(
   .cs-desafio,.cs-partida,.cs-decisiones,.cs-uso{padding-top:72px}
   .cs-desafio .cs-in,.cs-partida .cs-in,.cs-decisiones .cs-in{display:flex;flex-direction:column;gap:36px}
   .cs-desafio__media video{width:100%;height:auto;aspect-ratio:408/747;max-height:80vh}
+  .cs-stack--vid{width:100%;height:auto;aspect-ratio:408/747;max-height:80vh}
+  .cs-stack--vid video{height:100%;max-height:none}
   .cs-desafio .cs-body{margin-top:32px}
   .cs-ficha{margin-top:48px}
   .cs-refs{padding:24px}
